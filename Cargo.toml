@@ -1,0 +1,62 @@
+[package]
+name = "siveria"
+version = "0.0.1"
+authors = ["Alena Dzhukich <github@alena.red>"]
+edition = "2021"
+
+[[bin]]
+edition = "2021"
+name = "siveria"
+path = "src/main.rs"
+
+[dependencies]
+actix = "0.13.5"
+actix-cors = "0.7.0"
+r2d2 = "0.8.10"
+actix-governor = "0.6.0"
+actix-web = "4.9.0"
+tokio = { version = "1.40.0", features = ["full"] }
+diesel = { version = "2.2.4", features = [
+  "postgres",
+  "r2d2",
+  "chrono",
+  "uuid",
+  "serde_json",
+] }
+diesel-async = { version = "0.5.0", features = ["postgres", "deadpool"] }
+diesel_migrations = "2.2.0"
+serde = { version = "1.0.210", features = ["serde_derive"] }
+serde_with = "3.11.0"
+uuid = { version = "1.10.0", features = [
+  "v4",
+  "fast-rng",
+  "serde",
+  "macro-diagnostics",
+] }
+chrono = { version = "0.4.38", features = ["serde"] }
+dotenvy = "0.15.7"
+serde_derive = "1.0.210"
+serde_json = { version = "1.0.128", features = ["raw_value"] }
+actix-session = { version = "0.10.1", features = ["cookie-session"] }
+tracing = "0.1.40"
+tracing-subscriber = { version = "0.3.19", features = [
+  "fmt",
+  "std",
+  "env-filter",
+  "registry",
+  "json",
+  "tracing-log",
+  "local-time",
+] }
+config = { version = "0.14.0", features = ["yaml"] }
+argon2 = "0.5.3"
+openssl = "0.10.66"
+postgres-openssl = "0.5.0"
+native-tls = "0.2.12"
+actix-multipart = "0.7.2"
+rust-s3 = "0.35.1"
+mime = "0.3.17"
+mime_guess = "2.0.5"
+image = "0.25.4"
+time = { version = "0.3.37", features = ["macros"] }
+postgres = "0.19.9"
