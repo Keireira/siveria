@@ -22,7 +22,7 @@ pub async fn s3_upload(
     user: MultipartForm<UserForm>,
     dp: web::Data<WebDataPool>,
 ) -> Result<HttpResponse, Error> {
-    const MAX_FILE_SIZE: usize = 10 * 1024 * 1024; // 5MB
+    const MAX_FILE_SIZE: usize = 10 * 1024 * 1024; // 10MB
 
     /*
      * Ensure the image file exists
@@ -102,10 +102,7 @@ pub async fn s3_upload(
     /*
      * Construct the URL to the uploaded file
      */
-    let completed_url = format!(
-        "{}/{}/{}",
-        dp.envs.s3_endpoint_url, dp.envs.s3_bucket_name, file_name_to_upload
-    );
+    let completed_url = format!("{}/{}", dp.s3.url(), file_name_to_upload);
 
     Ok(actix_web::HttpResponse::Ok().json(UploadResponse {
         image_url: completed_url,
