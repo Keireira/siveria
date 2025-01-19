@@ -15,15 +15,31 @@ pub struct TestEntry {
 }
 
 pub async fn postgres(dp: web::Data<WebDataPool>) -> actix_web::HttpResponse {
-    let mut conn = acquire_pg_connection(&dp).await.unwrap();
+    /*
+     * Acquire a connection to the database.
+     */
+    let mut connection = match acquire_pg_connection(&dp).await {
+        Ok(conn) => conn,
+        Err(e) => {
+            tracing::event!(target: "[HEALTH/POSTGRES]", tracing::Level::ERROR, "Failed to acquire connection: {}", e);
 
+            return HttpResponse::InternalServerError().finish();
+        }
+    };
+
+    /*
+     * Query the database for all entries in the test_table.
+     */
     let result = web::block(move || {
         test_table::table
-            .load::<TestEntry>(&mut conn)
+            .load::<TestEntry>(&mut connection)
             .map_err(|e| e.to_string())
     })
     .await;
 
+    /*
+     * Handle the result of the query.
+     */
     match result {
         Ok(Ok(entries)) => HttpResponse::Ok().json(entries),
         Ok(Err(e)) => {

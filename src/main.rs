@@ -6,7 +6,7 @@ pub mod utils;
 
 extern crate diesel;
 use actix_web::{self, web, App, HttpServer};
-use routes::health;
+use routes::examples;
 use utils::check_port_in_use;
 
 #[actix_web::main]
@@ -73,7 +73,7 @@ async fn main() -> std::io::Result<()> {
             .wrap(middlewares.logger)
             .wrap(middlewares.session)
             .app_data(data_providers.clone())
-            .service(health::_routes::get_routes())
+            .service(examples::_routes::get_routes())
     })
     .bind((bind_env_config.hostname.as_str(), bind_env_config.port))?
     .workers(1)

@@ -1,5 +1,7 @@
 pub mod password;
-pub mod uploads;
+
+pub mod files;
+pub mod images;
 
 mod acquire_pg_connection;
 pub use acquire_pg_connection::acquire_pg_connection;
